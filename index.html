@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="index.js"></script>
+  <title>CrafyImageCompressJS</title>
+</head>
+<body>
+
+  <h1>CrafyImageCompressJS</h1>
+
+  <p>Select image (PNG, JPG, WEBP, GIF):</p>
+  <input type="file" id="archivoInput" accept="image/*">
+  <p>Compressed image:</p>
+  <p id="loadingText"><b>Loading...</b></p>
+  <img src="" id="resultImage">
+  <p>Result size: <span id="resultSize"></span></p>
+
+  <h2>Used libraries:</h2>
+  <ul>
+    <li><a href="https://github.com/fengyuanchen/compressorjs">compressorjs</a></li>
+    <li><a href="https://github.com/matt-way/gifuct-js">gifuct-js</a></li>
+    <li><a href="https://github.com/jnordberg/gif.js">gif.js</a></li>
+  </ul>
+
+  <p>Made with ❤️ by <a href="https://github.com/chijete/">Crafy Holding</a></p>
+
+  <script>
+    var instance_CrafyImageCompressJS;
+    var resultImage = document.getElementById('resultImage');
+    var loadingText = document.getElementById('loadingText');
+    var resultSize = document.getElementById('resultSize');
+    loadingText.style.display = 'none';
+    // Agrega un evento de cambio al input de archivo
+    document.getElementById('archivoInput').addEventListener('change', function (event) {
+      // Obtiene el archivo seleccionado
+      const archivo = event.target.files[0];
+
+      // Verifica si se seleccionó un archivo
+      if (archivo) {
+        loadingText.style.display = 'block';
+        // Crea un objeto FileReader
+        const lector = new FileReader();
+
+        // Define el evento de carga cuando se completa la lectura
+        lector.onload = function (e) {
+          // El resultado de la lectura es un objeto Blob
+          const blob = new Blob([e.target.result], { type: archivo.type });
+
+          // Aquí puedes hacer lo que quieras con el Blob (por ejemplo, enviarlo al servidor)
+          console.log('Archivo convertido a Blob:', blob);
+
+          instance_CrafyImageCompressJS = new CrafyImageCompressJS(blob, archivo.type);
+          instance_CrafyImageCompressJS.compressImage(0.6, 300, 300).then(function (compressedImage) {
+            console.log('compressedImage', compressedImage);
+            resultImage.src = URL.createObjectURL(compressedImage);
+            resultSize.innerText = compressedImage.size + ' bytes = ' + (compressedImage.size / 1000).toFixed(5) + ' KB = ' + (compressedImage.size / 1000000).toFixed(5) + ' MB.';
+            loadingText.style.display = 'none';
+          });
+        };
+
+        // Lee el contenido del archivo como un ArrayBuffer
+        lector.readAsArrayBuffer(archivo);
+      }
+    });
+  </script>
+  
+</body>
+</html>
