@@ -16,12 +16,16 @@
   <p id="loadingText"><b>Loading...</b></p>
   <img src="" id="resultImage">
   <p>Result size: <span id="resultSize"></span></p>
+  <img src="" id="secondaryImage">
+
+  <h2>Documentation</h2>
+  <p>Docs in: <a href="https://github.com/chijete/CrafyImageCompressJS">https://github.com/chijete/CrafyImageCompressJS</a></p>
 
   <h2>Used libraries:</h2>
   <ul>
-    <li><a href="https://github.com/fengyuanchen/compressorjs">compressorjs</a></li>
-    <li><a href="https://github.com/matt-way/gifuct-js">gifuct-js</a></li>
-    <li><a href="https://github.com/jnordberg/gif.js">gif.js</a></li>
+    <li><a href="https://github.com/fengyuanchen/compressorjs">compressorjs</a> for image compression and resize.</li>
+    <li><a href="https://github.com/matt-way/gifuct-js">gifuct-js</a> for GIF decode.</li>
+    <li><a href="https://github.com/jnordberg/gif.js">gif.js</a> for GIF encode.</li>
   </ul>
 
   <p>Made with ❤️ by <a href="https://github.com/chijete/">Crafy Holding</a></p>
@@ -29,6 +33,7 @@
   <script>
     var instance_CrafyImageCompressJS;
     var resultImage = document.getElementById('resultImage');
+    var secondaryImage = document.getElementById('secondaryImage');
     var loadingText = document.getElementById('loadingText');
     var resultSize = document.getElementById('resultSize');
     loadingText.style.display = 'none';
@@ -52,6 +57,9 @@
           console.log('Archivo convertido a Blob:', blob);
 
           instance_CrafyImageCompressJS = new CrafyImageCompressJS(blob, archivo.type);
+          instance_CrafyImageCompressJS.blobGifContainsTransparency(blob).then(function (res) {
+            console.log('blobGifContainsTransparency:', res);
+          });
           instance_CrafyImageCompressJS.compressImage(0.6, 300, 300).then(function (compressedImage) {
             console.log('compressedImage', compressedImage);
             resultImage.src = URL.createObjectURL(compressedImage);
