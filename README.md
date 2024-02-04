@@ -10,7 +10,7 @@ Principal class `CrafyImageCompressJS` it's inside `CrafyImageCompressJS.js` fil
 
 Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Reference section).
 
-```bash
+```
   <script src="./CrafyImageCompressJS.js"></script>
 ```
     
@@ -18,7 +18,7 @@ Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Refer
 
 #### Create new instance of class.
 
-```http
+```
   new CrafyImageCompressJS(image, image_type)
 ```
 
@@ -30,12 +30,12 @@ Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Refer
 
 #### Compress the image.
 
-```http
+```
   compressImage(quality, maxWidth, maxHeight)
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `quality`      | `float` | **Required**. Target quality from 0 to 1 (0 is lower quality and 1 is better quality, example: 0.6). |
-| `maxWidth`      | `float` | **Required**. Result image maximum width in pixels. |
-| `maxHeight`      | `float` | **Required**. Result image maximum height in pixels. |
+| `maxWidth`      | `float` | **Optional**. Result image maximum width in pixels. |
+| `maxHeight`      | `float` | **Optional**. Result image maximum height in pixels. |

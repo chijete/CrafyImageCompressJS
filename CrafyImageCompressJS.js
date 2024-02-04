@@ -213,14 +213,12 @@ class CrafyImageCompressJS {
 
   async compressFromBlob(
     imageBlob,
-    maxWidth,
-    maxHeight,
-    quality
+    maxWidth = false,
+    maxHeight = false,
+    quality = 0.6
   ) {
     return new Promise(function (resolve, reject) {
-      new Compressor(imageBlob, {
-        maxWidth: maxWidth,
-        maxHeight: maxHeight,
+      var compressorOptions = {
         quality: quality,
         success(image_reduced_blob) {
           resolve(image_reduced_blob);
@@ -228,11 +226,18 @@ class CrafyImageCompressJS {
         error(err) {
           reject(err);
         }
-      });
+      };
+      if (maxWidth !== false) {
+        compressorOptions.maxWidth = maxWidth;
+      }
+      if (maxHeight !== false) {
+        compressorOptions.maxHeight = maxHeight;
+      }
+      new Compressor(imageBlob, compressorOptions);
     });
   }
 
-  async compressGifFrames(quality, maxWidth, maxHeight) {
+  async compressGifFrames(quality, maxWidth = false, maxHeight = false) {
     var savedThis = this;
     for (const gifFrame of savedThis.gif_frames) {
       var gifFrameCompressed = await savedThis.compressFromBlob(
@@ -250,10 +255,10 @@ class CrafyImageCompressJS {
   /**
   * Compress the image.
   * @param {float} quality - Target quality (from 0 to 1, example: 0.6).
-  * @param {float} maxWidth - Result image maximum width in pixels.
-  * @param {float} maxHeight - Result image maximum height in pixels.
+  * @param {float} maxWidth - (optional) Result image maximum width in pixels.
+  * @param {float} maxHeight - (optional) Result image maximum height in pixels.
   */
-  async compressImage(quality, maxWidth, maxHeight) {
+  async compressImage(quality, maxWidth = false, maxHeight = false) {
     var savedThis = this;
     return new Promise(function (resolve, reject) {
       if (!savedThis.is_gif) {
