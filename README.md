@@ -28,6 +28,8 @@ Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Refer
 | `image_type` | `string` | **Required**. Image mime type (example: "image/png") |
 | `gifjs_workerScript_url` | `string` | **Optional**. gif.js workerScript URL (link to `gif.worker.js` file) |
 
+**Returns:** `true`.
+
 #### Compress the image.
 
 ```
@@ -41,3 +43,5 @@ Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Refer
 | `maxHeight`      | `float` | **Optional**. Result image maximum height in pixels. |
 | `maxWidthForGIF`      | `float` | **Optional**. Result image maximum width in pixels (only for GIFs). |
 | `maxHeightForGIF`      | `float` | **Optional**. Result image maximum height in pixels (only for GIFs). |
+
+**Returns:** `Blob Image`.
