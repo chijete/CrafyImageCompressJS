@@ -257,8 +257,16 @@ class CrafyImageCompressJS {
   * @param {float} quality - Target quality (from 0 to 1, example: 0.6).
   * @param {float} maxWidth - (optional) Result image maximum width in pixels.
   * @param {float} maxHeight - (optional) Result image maximum height in pixels.
+  * @param {float} maxWidthForGIF - (optional) Result image maximum width in pixels (only for GIFs).
+  * @param {float} maxHeightForGIF - (optional) Result image maximum height in pixels (only for GIFs).
   */
-  async compressImage(quality, maxWidth = false, maxHeight = false) {
+  async compressImage(quality, maxWidth = false, maxHeight = false, maxWidthForGIF = false, maxHeightForGIF = false) {
+    if (maxWidthForGIF === false) {
+      maxWidthForGIF = maxWidth;
+    }
+    if (maxHeightForGIF === false) {
+      maxHeightForGIF = maxHeight;
+    }
     var savedThis = this;
     return new Promise(function (resolve, reject) {
       if (!savedThis.is_gif) {
@@ -276,7 +284,7 @@ class CrafyImageCompressJS {
         savedThis.convertGifToFrames().then(function (conversionResult) {
           if (conversionResult) {
             if (savedThis.gif_frames.length > 0) {
-              savedThis.compressGifFrames(quality, maxWidth, maxHeight).then(async function () {
+              savedThis.compressGifFrames(quality, maxWidthForGIF, maxHeightForGIF).then(async function () {
                 var newGIF_options = {
                   repeat: 0,
                   background: '#000',

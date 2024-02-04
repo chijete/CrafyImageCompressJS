@@ -39,3 +39,5 @@ Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Refer
 | `quality`      | `float` | **Required**. Target quality from 0 to 1 (0 is lower quality and 1 is better quality, example: 0.6). |
 | `maxWidth`      | `float` | **Optional**. Result image maximum width in pixels. |
 | `maxHeight`      | `float` | **Optional**. Result image maximum height in pixels. |
+| `maxWidthForGIF`      | `float` | **Optional**. Result image maximum width in pixels (only for GIFs). |
+| `maxHeightForGIF`      | `float` | **Optional**. Result image maximum height in pixels (only for GIFs). |
