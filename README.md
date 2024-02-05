@@ -44,4 +44,4 @@ Download `CrafyImageCompressJS.js` and `gif.worker.js` (more info in Class Refer
 | `maxWidthForGIF`      | `float` | **Optional**. Result image maximum width in pixels (only for GIFs). |
 | `maxHeightForGIF`      | `float` | **Optional**. Result image maximum height in pixels (only for GIFs). |
 
-**Returns:** `Blob Image`.
+**Returns:** `Blob Image` ("image/gif" for GIF input, "image/webp" for everyone else).

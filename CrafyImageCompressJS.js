@@ -220,6 +220,7 @@ class CrafyImageCompressJS {
     return new Promise(function (resolve, reject) {
       var compressorOptions = {
         quality: quality,
+        mimeType: 'image/webp',
         success(image_reduced_blob) {
           resolve(image_reduced_blob);
         },
@@ -252,6 +253,35 @@ class CrafyImageCompressJS {
     }
   }
 
+  convertImageFormat(blobImagen, formatoDestino) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+
+      img.onload = function () {
+        // Establecer el tamaño del canvas al tamaño de la imagen
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Dibujar la imagen en el canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Convertir el contenido del canvas a una URL de datos en el formato deseado
+        canvas.toBlob((blob) => {
+          resolve(blob);
+        }, formatoDestino);
+      };
+
+      img.onerror = function () {
+        reject(new Error('Error al cargar la imagen'));
+      };
+
+      img.src = URL.createObjectURL(blobImagen);
+    });
+  }
+
   /**
   * Compress the image.
   * @param {float} quality - Target quality (from 0 to 1, example: 0.6).
@@ -275,8 +305,13 @@ class CrafyImageCompressJS {
           maxWidth,
           maxHeight,
           quality
-        ).then(function (finalImageBlob) {
-          resolve(finalImageBlob);
+        ).then(function (compressedImageBlob) {
+          resolve(compressedImageBlob);
+          // savedThis.convertImageFormat(compressedImageBlob, savedThis.image_type).then(function (finalImageBlob) {
+          //   resolve(finalImageBlob);
+          // }).catch(function (error) {
+          //   reject(error);
+          // });
         }).catch(function (error) {
           reject(error);
         });
