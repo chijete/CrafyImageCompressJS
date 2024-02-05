@@ -322,13 +322,13 @@ class CrafyImageCompressJS {
               savedThis.compressGifFrames(quality, maxWidthForGIF, maxHeightForGIF).then(async function () {
                 var newGIF_options = {
                   repeat: 0,
-                  background: '#000',
+                  background: savedThis.gif_transparency,
                   workerScript: savedThis.gifjs_workerScript
                 };
                 if (savedThis.gif_transparency !== false) {
                   newGIF_options.transparent = savedThis.gif_transparency;
                 }
-                var newGIF = new GIF();
+                var newGIF = new GIF(newGIF_options);
                 for (let index = 0; index < savedThis.compressedGifFramesAsImages.length; index++) {
                   newGIF.addFrame(savedThis.compressedGifFramesAsImages[index], {
                     delay: savedThis.gif_frames[index]['delay'],
